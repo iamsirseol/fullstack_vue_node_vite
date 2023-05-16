@@ -4,22 +4,32 @@ export const { mapState, mapGetters, mapMutations, mapActions } = createNamespac
 
 export default {
   namespaced: true,
-  state: {},
+  state: {
+    SIGNIN_RESULT: null,
+    SIGNUP_RESULT: null,
+  },
   getters: {},
-  mutations: {},
+  mutations: {
+    SET_SIGNIN(state, payload) {
+      state.SIGNIN_RESULT = payload;
+    },
+    SET_SIGNUP(state, payload) {
+      state.SIGNUP_RESULT = payload;
+    },
+  },
   actions: {
     async SIGNIN_USER({ commit }, payload) {
       try {
-        const response = await axiosInstance.post(`/api/v1/account/signin`, payload);
-        return response.data.data;
+        const response = await axiosInstance.post(`/account/signin`, payload);
+        commit("SET_SIGNIN", response);
       } catch (e) {
         return null;
       }
     },
     async SIGNUP_USER({ commit }, payload) {
       try {
-        const response = await axiosInstance.post(`/api/v1/account/signup`, payload);
-        return response.data.data;
+        const response = await axiosInstance.post(`/account/signup`, payload);
+        commit("SET_SIGNUP", response);
       } catch (e) {
         return null;
       }

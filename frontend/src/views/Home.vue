@@ -1,5 +1,5 @@
 <script>
-import AlertModal from "../componenets/modal/AlertModal.vue";
+import AlertModal from "../components/modal/AlertModal.vue";
 export default {
   name: "Home",
   components: {

@@ -3,7 +3,7 @@ import Axios from "axios";
 // console.log(process);
 const axiosInstance = Axios.create({
   // baseURL: process.env.VUE_APP_LOCALHOST,
-  baseURL: "http://localhost:3000",
+  baseURL: "http://localhost:3000/api/v1",
   timeout: 10000,
 });
 

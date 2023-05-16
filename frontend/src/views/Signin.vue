@@ -1,7 +1,6 @@
 <script>
 import * as AccountStore from "../store/module/account";
-import axiosInstance from "../util";
-import AlertModal from "../componenets/modal/AlertModal.vue";
+import AlertModal from "../components/modal/AlertModal.vue";
 import common from "../util/common";
 
 export default {
@@ -9,24 +8,28 @@ export default {
   components: { AlertModal },
   data() {
     return {
-      id: "",
-      password: "",
+      formData: {
+        id: "",
+        password: "",
+      },
       isModalOpen: false,
     };
   },
-
+  computed: {
+    ...AccountStore.mapState(["SIGNIN_RESULT"]),
+  },
   methods: {
     ...AccountStore.mapActions(["SIGNIN_USER"]),
     async siginFunction() {
       try {
-        if (this.id && common.passwordValidator(this.password)) {
+        if (this.formData.id && common.passwordValidator(this.formData.password)) {
           const payload = {
-            id: this.id,
-            password: common.encodeToBase64(this.password),
+            id: this.formData.id,
+            password: common.encodeToBase64(this.formData.password),
           };
-          // const { data } = await this.SIGNIN_USER(payload);
-          const res = await axiosInstance.post("/api/v1/account/signin", payload);
-          if (res.status === 200) this.$router.push("/home");
+          await this.SIGNIN_USER(payload);
+          this.$router.push("/home");
+          console.log(this.SIGNIN_RESULT);
         } else {
           throw Error;
         }
@@ -42,9 +45,9 @@ export default {
 <template>
   <div>
     <form class="signin-box" @submit.prevent="siginFunction">
-      <div class="id-div"><label for="id">ID</label><input id="id" type="text" v-model="id" /></div>
+      <div class="id-div"><label for="id">ID</label><input id="id" type="text" v-model="formData.id" /></div>
       <div class="pw-div">
-        <label for="password">PASSWORD</label><input id="password" type="password" v-model="password" />
+        <label for="password">PASSWORD</label><input id="password" type="password" v-model="formData.password" />
       </div>
       <button class="signin-btn" type="submit">Signin</button>
       <br />

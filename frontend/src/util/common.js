@@ -4,6 +4,6 @@ export default {
     return passwordRegex.test(pass);
   },
   encodeToBase64: (pass) => {
-    return btoa(pass);
+    return window.btoa(pass);
   },
 };

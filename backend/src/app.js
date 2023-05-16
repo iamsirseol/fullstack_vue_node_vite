@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
-const connectMySQL = mysql.createConnection({
+export default connectMySQL = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "tjfehd0409",
@@ -33,8 +33,8 @@ const connectMySQL = mysql.createConnection({
 app.use("/hello", indexRouter);
 app.get("/users", (req, res) => {
   connectMySQL.query("SELECT * from Users", (error, rows, fields) => {
-    if (error) throw error;
-    console.log(fields);
+    if (error) throw Error(error);
+    console.log(rows);
     res.send(rows);
   });
 });
