@@ -1,33 +1,42 @@
-<script>
-export default {
-  name: "AlertModal",
-  props: {
-    isModalOpen: Boolean,
-  },
-};
-</script>
-
 <template>
   <Transition name="modal">
-    <div v-if="isModalOpen" class="modal-mask">
+    <div v-if="IS_OPEN" class="modal-mask">
       <div class="modal-container">
         <div class="modal-header">
-          <slot name="header">default header</slot>
+          <h3>{{ MODAL_DATA.header }}</h3>
         </div>
-
         <div class="modal-body">
-          <slot name="body">default body</slot>
+          <p>{{ MODAL_DATA.body }}</p>
         </div>
-
         <div class="modal-footer">
-          <slot name="footer"> default footer </slot>
+          <slot name="footer"></slot>
+          <!-- <button @click="CLOSE_MODAL">Close</button>
+          <button v-if="IS_OPEN" @click="CLOSE_MODAL">Aplly</button> -->
         </div>
       </div>
     </div>
   </Transition>
 </template>
 
-<style lang="less">
+<script>
+import * as ModalStore from "../../store/module/modal";
+
+export default {
+  name: "AlertModal",
+  props: {
+    isModalOpen: Boolean,
+  },
+  created() {},
+  computed: {
+    ...ModalStore.mapState(["MODAL_DATA", "IS_OPEN"]),
+  },
+  methods: {
+    ...ModalStore.mapActions(["CLOSE_MODAL"]),
+  },
+};
+</script>
+
+<style lang="less" scoped>
 .modal-mask {
   position: fixed;
   z-index: 9998;

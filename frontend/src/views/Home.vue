@@ -1,5 +1,24 @@
+<template>
+  <div>
+    <header class="header-bar">
+      <button class="logout-btn" @click="logoutHandler">{{ $t("button.logout") }}</button>
+    </header>
+    <Teleport to="body">
+      <!-- use the modal component, pass in the prop -->
+      <AlertModal>
+        <template #footer>
+          <button @click="CLOSE_MODAL">{{ $t("button.close") }}</button>
+          <button @click="applyHandler">{{ $t("button.apply") }}</button>
+        </template>
+      </AlertModal>
+    </Teleport>
+  </div>
+</template>
+
 <script>
 import AlertModal from "../components/modal/AlertModal.vue";
+import * as ModalStore from "../store/module/modal";
+
 export default {
   name: "Home",
   components: {
@@ -10,38 +29,27 @@ export default {
       isModalOpen: false,
     };
   },
-  methods: {},
+  methods: {
+    ...ModalStore.mapActions(["CLOSE_MODAL", "OPEN_MODAL"]),
+    logoutHandler() {
+      this.OPEN_MODAL({
+        header: this.$i18n.t("modalMessage.header.confirm"),
+        body: this.$i18n.t("modalMessage.askLogout"),
+      });
+    },
+    applyHandler() {
+      this.CLOSE_MODAL();
+      this.$router.push("/signin");
+    },
+  },
 };
 </script>
-
-<template>
-  <div>
-    <header class="header-bar">
-      <button class="logout-btn" @click="isModalOpen = true">Logout</button>
-    </header>
-    <Teleport to="body">
-      <!-- use the modal component, pass in the prop -->
-      <AlertModal @close="isModalOpen = false" :isModalOpen="isModalOpen">
-        <template #header>
-          <h3>Confirm</h3>
-        </template>
-        <template #body>
-          <p>로그아웃 하시겠습니까?</p>
-        </template>
-        <template #footer>
-          <button @click="isModalOpen = false">Close</button>
-          <button @click="$router.push('/signin')">Apply</button>
-        </template>
-      </AlertModal>
-    </Teleport>
-  </div>
-</template>
 
 <style scoped lang="less">
 .header-bar {
   height: 60px;
   width: 100%;
-  background-color: #000;
+  background-color: #969191;
   display: flex;
   justify-content: flex-end;
   align-items: center;

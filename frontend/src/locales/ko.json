@@ -1,0 +1,31 @@
+{
+  "account": {
+    "id": "아이디",
+    "password": "비밀번호",
+    "rePassword": "비밀번호 재확인",
+    "name": "이름",
+    "gender": "성별",
+    "priority": "우선순위",
+    "signin": "로그인",
+    "signup": "회원가입",
+    "male": "남자",
+    "female": "여자",
+    "admin": "운영자",
+    "developer": "개발자",
+    "wrongValue": "잘못된 값입니다."
+  },
+  "button": {
+    "cancel": "취 소",
+    "apply": "적 용",
+    "close": "닫 기",
+    "logout": "로그아웃"
+  },
+  "modalMessage": {
+    "header": {
+      "info": "알 림",
+      "confirm": "확 인"
+    },
+    "loginFailed": "로그인 실패하였습니다.",
+    "askLogout": "로그아웃 하시겠습니까?"
+  }
+}

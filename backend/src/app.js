@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
-export default connectMySQL = mysql.createConnection({
+const connectMySQL = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "tjfehd0409",
@@ -57,8 +57,8 @@ app.use(function (err, req, res, next) {
 });
 
 connectMySQL.connect((error) => {
-  if (error) console.log("failed!!!", error);
-  else console.log("connected!!!!");
+  if (error) console.log("failed", error);
+  else console.log("connected");
 });
 
 module.exports = app;

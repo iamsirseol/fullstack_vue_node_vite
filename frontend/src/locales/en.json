@@ -1,0 +1,27 @@
+{
+  "account": {
+    "id": "ID",
+    "password": "Password",
+    "rePassword": "Re Password",
+    "name": "Name",
+    "gender": "Gender",
+    "priority": "Priority",
+    "signin": "Signin",
+    "signup": "Signup",
+    "male": "Male",
+    "female": "Female",
+    "admin": "Admin",
+    "developer": "Developer",
+    "wrongValue": "Wrong Value!",
+    "logout": "Logout"
+  },
+  "button": {
+    "cancel": "Cancel",
+    "apply": "Apply",
+    "close": "Close"
+  },
+  "modalMessage": {
+    "loginFailed": "Login failed.",
+    "askLogout": "Are you sure you want to log out?"
+  }
+}

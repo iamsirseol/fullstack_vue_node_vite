@@ -22,16 +22,18 @@ export default {
       try {
         const response = await axiosInstance.post(`/account/signin`, payload);
         commit("SET_SIGNIN", response);
-      } catch (e) {
-        return null;
+      } catch (error) {
+        commit("SET_SIGNIN", null);
+        throw Error(error);
       }
     },
     async SIGNUP_USER({ commit }, payload) {
       try {
         const response = await axiosInstance.post(`/account/signup`, payload);
         commit("SET_SIGNUP", response);
-      } catch (e) {
-        return null;
+      } catch (error) {
+        commit("SET_SIGNUP", null);
+        throw Error(error);
       }
     },
   },

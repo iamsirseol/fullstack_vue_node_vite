@@ -1,14 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const mysql = require("mysql");
-import { connectMySQL } from "../app";
 
-// const connectMySQL = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "tjfehd0409",
-//   database: "my_db",
-// });
+const connectMySQL = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "tjfehd0409",
+  database: "my_db",
+});
 
 const decodePassword = (pass) => Buffer.from(pass, "base64").toString("utf8");
 
@@ -19,9 +18,9 @@ router.post("/signin", (req, res, next) => {
     (error, row, fields) => {
       if (error) {
         res.status(400).json(error);
-        throw Error(error);
+      } else {
+        res.status(200).json("signin successfully");
       }
-      res.status(200).json("signin successfully");
     }
   );
 });
@@ -36,9 +35,9 @@ router.post("/signup", function (req, res, next) {
     (error, rows, fields) => {
       if (error) {
         res.status(400).json(error);
-        throw Error(error);
+      } else {
+        res.status(201).json("created successfully");
       }
-      res.status(201).json("created successfully");
     }
   );
 });

@@ -1,3 +1,57 @@
+<template>
+  <form class="signup-container" @submit.prevent="submitForm">
+    <div class="inner-div-box">
+      <label for="id">{{ $t("account.id") }}</label
+      ><input id="id" type="text" v-model="formData.idValue" />
+    </div>
+    <div class="invalid-msg" :style="{ visibility: isVisible.visibleID ? 'visible' : 'hidden' }">
+      {{ $t("account.wrongValue") }}
+    </div>
+    <div class="inner-div-box">
+      <label for="password">{{ $t("account.password") }}</label
+      ><input id="password" type="password" v-model="formData.passwordValue" />
+    </div>
+    <div class="invalid-msg" :style="{ visibility: isVisible.visiblePassword ? 'visible' : 'hidden' }">
+      {{ $t("account.wrongValue") }}
+    </div>
+    <div class="inner-div-box">
+      <label for="rePassword">{{ $t("account.rePassword") }}</label
+      ><input id="rePassword" type="password" v-model="formData.rePasswordValue" />
+    </div>
+    <div class="invalid-msg" :style="{ visibility: isVisible.visibleRePassword ? 'visible' : 'hidden' }">
+      {{ $t("account.wrongValue") }}
+    </div>
+    <div class="inner-div-box">
+      <label for="name">{{ $t("account.name") }}</label
+      ><input id="name" type="text" v-model="formData.nameValue" />
+    </div>
+    <div class="invalid-msg" :style="{ visibility: isVisible.visibleName ? 'visible' : 'hidden' }">
+      {{ $t("account.wrongValue") }}
+    </div>
+    <div class="inner-gender-box">
+      <label class="gender-label" for="gender">{{ $t("account.gender") }}</label>
+      <div class="gender-input">
+        <input id="male" type="radio" name="gender" value="m" v-model="formData.genderValue" />
+        <label for="male">{{ $t("account.male") }}</label>
+        <input id="female" type="radio" name="gender" value="f" v-model="formData.genderValue" />
+        <label for="female">{{ $t("account.female") }}</label>
+      </div>
+    </div>
+    <div class="inner-div-box">
+      <label for="priority">{{ $t("account.priority") }}</label
+      ><select name="priority" id="priority" v-model="formData.priorityValue" class="select-box">
+        <option value="1">{{ $t("account.admin") }}</option>
+        <option value="2">{{ $t("account.developer") }}</option>
+      </select>
+    </div>
+    <div class="btn-box">
+      <router-link to="/signin"
+        ><button>{{ $t("button.cancel") }}</button></router-link
+      ><button type="submit">{{ $t("button.apply") }}</button>
+    </div>
+  </form>
+</template>
+
 <script>
 import common from "../util/common";
 import * as AccountStore from "../store/module/account";
@@ -43,58 +97,16 @@ export default {
             priority: this.formData.priorityValue,
           };
           await this.SIGNUP_USER(payload);
-          this.$router.push("/signin"); // 계정 생성 성공 Modal?
+          console.log(this.SIGNUP_RESULT);
+          // this.$router.push("/signin"); // 계정 생성 성공 Modal?
         }
       } catch (e) {
-        console.log(e);
+        return e;
       }
     },
   },
 };
 </script>
-
-<template>
-  <form class="signup-container" @submit.prevent="submitForm">
-    <div class="inner-div-box"><label for="id">ID</label><input id="id" type="text" v-model="formData.idValue" /></div>
-    <div class="invalid-msg" :style="{ visibility: isVisible.visibleID ? 'visible' : 'hidden' }">Wrong Value!</div>
-    <div class="inner-div-box">
-      <label for="password">Password</label><input id="password" type="password" v-model="formData.passwordValue" />
-    </div>
-    <div class="invalid-msg" :style="{ visibility: isVisible.visiblePassword ? 'visible' : 'hidden' }">
-      Wrong Value!
-    </div>
-    <div class="inner-div-box">
-      <label for="rePassword">Re Password</label
-      ><input id="rePassword" type="password" v-model="formData.rePasswordValue" />
-    </div>
-    <div class="invalid-msg" :style="{ visibility: isVisible.visibleRePassword ? 'visible' : 'hidden' }">
-      Wrong Value!
-    </div>
-    <div class="inner-div-box">
-      <label for="name">Name</label><input id="name" type="text" v-model="formData.nameValue" />
-    </div>
-    <div class="invalid-msg" :style="{ visibility: isVisible.visibleName ? 'visible' : 'hidden' }">Wrong Value!</div>
-    <div class="inner-gender-box">
-      <label for="gender">Gender</label>
-      <div class="gender-input">
-        <input id="male" type="radio" name="gender" value="m" v-model="formData.genderValue" />
-        <label for="male">Male</label>
-        <input id="female" type="radio" name="gender" value="f" v-model="formData.genderValue" />
-        <label for="female">Female</label>
-      </div>
-    </div>
-    <div class="inner-div-box">
-      <label for="priority">Priority</label
-      ><select name="priority" id="priority" v-model="formData.priorityValue" class="select-box">
-        <option value="1">Admin</option>
-        <option value="2">Developer</option>
-      </select>
-    </div>
-    <div class="btn-box">
-      <router-link to="/signin"><button>Cancel</button></router-link><button type="submit">Apply</button>
-    </div>
-  </form>
-</template>
 
 <style scoped lang="less">
 .signup-container {
@@ -115,10 +127,21 @@ export default {
     display: flex;
     width: 400px;
     margin-bottom: 28px;
+    .gender-label {
+      width: 100px;
+      text-align: left;
+      margin-left: auto;
+    }
     .gender-input {
       display: flex;
-      margin-left: 25px;
-      width: 400px;
+      margin-left: 30px;
+      width: 300px;
+      label {
+        width: 100px;
+      }
+      input {
+        width: 20px;
+      }
     }
   }
   .btn-box {
@@ -127,6 +150,9 @@ export default {
     width: 40%;
     display: flex;
     justify-content: space-around;
+    button {
+      width: 100px;
+    }
   }
   .select-box {
     width: 81%;
